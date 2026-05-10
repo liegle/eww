@@ -10,7 +10,7 @@ makedepends=(cargo git)
 depends=(libdbusmenu-gtk3 gtk3 gtk-layer-shell)
 provides=(eww)
 conflicts=(eww)
-options=(!strip !debug)
+options=(strip !debug)
 source=(
     "git+$url#branch=master"
 )
@@ -24,6 +24,7 @@ prepare() {
 
 build() {
     cd $_name
+    export RUSTFLAGS="--remap-path-prefix=$srcdir=/src"
     export RUSTUP_TOOLCHAIN=stable
     export CARGO_TARGET_DIR=target
     cargo build --frozen --release
